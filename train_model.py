@@ -116,14 +116,14 @@ print("\n[6/6] Evaluating model …")
 y_pred  = model.predict(X_test)
 y_proba = model.predict_proba(X_test)[:, 1]
 acc     = accuracy_score(y_test, y_pred)
-print(f"\n      ✅ Accuracy : {acc * 100:.2f}%")
+print(f"\n       Accuracy : {acc * 100:.2f}%")
 print("\n      Classification Report:")
 print(classification_report(y_test, y_pred, target_names=["No Flood", "Flood"]))
 
 # ══════════════════════════════════════════════════════════════════════════
 # SAVE MODEL
 # ══════════════════════════════════════════════════════════════════════════
-print(f"\n💾  Saving model → {MODEL_PATH}")
+print(f"\n  Saving model → {MODEL_PATH}")
 with open(MODEL_PATH, "wb") as f:
     pickle.dump({"model": model, "features": FEATURES}, f)
 print("    Model saved successfully.")
