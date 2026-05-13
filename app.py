@@ -4,9 +4,6 @@ Flood Prediction System — Streamlit Application
 Run with:
     streamlit run app/app.py
 """
-
-import os
-import sys
 import pickle
 import numpy as np
 import pandas as pd
@@ -29,7 +26,6 @@ IMAGES_DIR = BASE_DIR / "images"
 # ══════════════════════════════════════════════════════════════════════════
 st.set_page_config(
     page_title="Flood Prediction System",
-    page_icon="🌊",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -201,7 +197,7 @@ def recommendations(severity):
         }
     else:
         return {
-            "title": "✅ Low Risk — Normal Precautions",
+            "title": " Low Risk — Normal Precautions",
             "items": [
                 "Conditions appear safe; continue normal activities",
                 "Stay informed via weather apps — conditions can change",
@@ -216,29 +212,29 @@ def recommendations(severity):
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.markdown("## 🌊 Flood Prediction\nSystem")
+    st.markdown("## Flood Prediction\nSystem")
     st.markdown("---")
 
-    st.markdown("### 📍 Location")
+    st.markdown("## Location")
     region = st.text_input("Region / City Name", value="", placeholder="e.g. Patna, Bihar")
 
-    st.markdown("### 🌧️ Atmospheric Conditions")
+    st.markdown("## Atmospheric Conditions")
     rainfall   = st.slider("Rainfall (mm)",   0.0, 300.0, 120.0, step=1.0,
                             help="Total recent rainfall in millimetres")
     humidity   = st.slider("Humidity (%)",    0.0, 100.0, 65.0,  step=1.0)
 
-    st.markdown("### 🌊 Hydrological Conditions")
+    st.markdown("## Hydrological Conditions")
     river_discharge = st.slider("River Discharge (m³/s)", 0.0, 5000.0, 1500.0, step=10.0)
     water_level     = st.slider("Water Level (m)",        0.0, 10.0,   4.5,    step=0.1)
 
-    st.markdown("### 🏔️ Terrain & History")
+    st.markdown("## Terrain & History")
     elevation  = st.slider("Elevation (m)",    0.0, 9000.0, 300.0, step=10.0)
     historical = st.selectbox("Historical Flood Events", [0, 1],
                                format_func=lambda x: "Yes — floods recorded" if x else "No historical floods")
 
     predict_btn = st.button("🔍 Predict Flood Risk", use_container_width=True, type="primary")
     st.markdown("---")
-    page = st.radio("Navigate", ["🏠 Prediction", "📊 Data Insights", "ℹ️ About"], label_visibility="collapsed")
+    page = st.radio("Navigate", [" Prediction", " Data Insights", " About"], label_visibility="collapsed")
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -263,13 +259,13 @@ except Exception:
 # ══════════════════════════════════════════════════════════════════════════
 # PAGE: PREDICTION
 # ══════════════════════════════════════════════════════════════════════════
-if "🏠 Prediction" in page:
+if " Prediction" in page:
 
     # Header
     location_str = f" — {region}" if region.strip() else ""
     st.markdown(f"""
     <div class="header-banner">
-        <h1>🌊 AI Flood Prediction System{location_str}</h1>
+        <h1> AI Flood Prediction System{location_str}</h1>
         <p>Real-time flood risk assessment powered by Machine Learning &amp; Domain-Knowledge Scoring</p>
     </div>
     """, unsafe_allow_html=True)
@@ -278,12 +274,12 @@ if "🏠 Prediction" in page:
     st.markdown('<div class="section-title">📋 Current Input Conditions</div>', unsafe_allow_html=True)
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     tiles = [
-        (c1, "🌧️ Rainfall",    f"{rainfall:.0f} mm"),
-        (c2, "💧 Humidity",    f"{humidity:.0f}%"),
-        (c3, "🌊 River Flow",  f"{river_discharge:.0f} m³/s"),
-        (c4, "📏 Water Level", f"{water_level:.1f} m"),
-        (c5, "⛰️ Elevation",   f"{elevation:.0f} m"),
-        (c6, "📜 History",     "Yes" if historical else "No"),
+        (c1, " Rainfall",    f"{rainfall:.0f} mm"),
+        (c2, " Humidity",    f"{humidity:.0f}%"),
+        (c3, " River Flow",  f"{river_discharge:.0f} m³/s"),
+        (c4, " Water Level", f"{water_level:.1f} m"),
+        (c5, " Elevation",   f"{elevation:.0f} m"),
+        (c6, " History",     "Yes" if historical else "No"),
     ]
     for col, label, value in tiles:
         col.markdown(f"""
@@ -394,7 +390,7 @@ if "🏠 Prediction" in page:
             plt.close()
 
         # ── Severity table ───────────────────────────────────────────────
-        st.markdown('<div class="section-title">📏 Severity Classification</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title"> Severity Classification</div>', unsafe_allow_html=True)
         sc1, sc2, sc3 = st.columns(3)
         for col_s, label, rng, cls, active in [
             (sc1, "🟢 LOW",    "0% – 30%",  "risk-low",    severity == "LOW"),
@@ -411,7 +407,7 @@ if "🏠 Prediction" in page:
             """, unsafe_allow_html=True)
 
         # ── Recommendations ─────────────────────────────────────────────
-        st.markdown('<div class="section-title">💡 Safety Recommendations</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title"> Safety Recommendations</div>', unsafe_allow_html=True)
         items_html = "".join(f"<li>{item}</li>" for item in recs["items"])
         st.markdown(f"""
         <div class="{recs['css']}">
@@ -424,10 +420,10 @@ if "🏠 Prediction" in page:
 # ══════════════════════════════════════════════════════════════════════════
 # PAGE: DATA INSIGHTS
 # ══════════════════════════════════════════════════════════════════════════
-elif "📊 Data Insights" in page:
+elif " Data Insights" in page:
     st.markdown("""
     <div class="header-banner">
-        <h1>📊 Dataset Insights</h1>
+        <h1> Dataset Insights</h1>
         <p>Exploratory analysis of the India Flood Risk Dataset (10,000 records)</p>
     </div>
     """, unsafe_allow_html=True)
@@ -439,10 +435,10 @@ elif "📊 Data Insights" in page:
     # Stats row
     c1, c2, c3, c4 = st.columns(4)
     for col, label, val in [
-        (c1, "📄 Total Records",    f"{len(df):,}"),
-        (c2, "🌊 Flood Events",     f"{df['Flood Occurred'].sum():,}"),
-        (c3, "✅ Non-flood Events", f"{(df['Flood Occurred']==0).sum():,}"),
-        (c4, "📐 Features",         str(df.shape[1])),
+        (c1, " Total Records",    f"{len(df):,}"),
+        (c2, " Flood Events",     f"{df['Flood Occurred'].sum():,}"),
+        (c3, " Non-flood Events", f"{(df['Flood Occurred']==0).sum():,}"),
+        (c4, " Features",         str(df.shape[1])),
     ]:
         col.markdown(f"""
         <div class="metric-tile">
@@ -473,36 +469,36 @@ elif "📊 Data Insights" in page:
                 st.info(f"Chart not found. Run `python model/train_model.py` to generate it.")
 
     # Summary statistics table
-    st.markdown('<div class="section-title">📋 Summary Statistics</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"> Summary Statistics</div>', unsafe_allow_html=True)
     num_cols = ["Rainfall (mm)", "Humidity (%)", "River Discharge (m³/s)",
                 "Water Level (m)", "Elevation (m)"]
     st.dataframe(df[num_cols].describe().round(2), use_container_width=True)
 
     # Raw data preview
-    with st.expander("🗃️ View Raw Data (first 100 rows)"):
+    with st.expander(" View Raw Data (first 100 rows)"):
         st.dataframe(df.head(100), use_container_width=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════
 # PAGE: ABOUT
 # ══════════════════════════════════════════════════════════════════════════
-elif "ℹ️ About" in page:
+elif " About" in page:
     st.markdown("""
     <div class="header-banner">
-        <h1>ℹ️ About This System</h1>
+        <h1> About This System</h1>
         <p>Technical overview of the AI Flood Prediction System</p>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    ## 🌊 Project Overview
+    ##  Project Overview
     This system predicts flood risk using a combination of **Machine Learning** 
     (Random Forest Classifier) and **domain-knowledge physics scoring** based on 
     real hydrological and meteorological thresholds.
 
     ---
 
-    ## 🏗️ Architecture
+    ##  Architecture
     ```
     Historical Flood Dataset (India, 10,000 records)
                 ↓
@@ -525,7 +521,7 @@ elif "ℹ️ About" in page:
 
     ---
 
-    ## 📦 Feature Set
+    ##  Feature Set
     | Feature | Description | Weight in Domain Score |
     |---|---|---|
     | Rainfall (mm) | Recent precipitation | 30% |
@@ -537,7 +533,7 @@ elif "ℹ️ About" in page:
 
     ---
 
-    ## ⚠️ Dataset Note
+    ##  Dataset Note
     The training dataset (`flood_risk_dataset_india.csv`) is **synthetically generated**
     with near-random flood labels (correlation < 0.03 between features and target).
     This is why the ML model alone achieves ~50% accuracy.
@@ -551,7 +547,7 @@ elif "ℹ️ About" in page:
 
     ---
 
-    ## 🛠️ Technology Stack
+    ##  Technology Stack
     | Component | Library |
     |---|---|
     | ML Model | scikit-learn RandomForestClassifier |
@@ -562,7 +558,7 @@ elif "ℹ️ About" in page:
 
     ---
 
-    ## 📞 Emergency Contacts (India)
+    ##  Emergency Contacts (India)
     - **NDMA Helpline**: 1078
     - **National Emergency**: 112
     - **IMD Flood Forecast**: imd.gov.in
